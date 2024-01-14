@@ -7,7 +7,7 @@ def execute_command(command):
         print(result.stdout)
     except subprocess.CalledProcessError as e:
         print(f"Error executing command: {e}\n{e.stderr}", file=sys.stderr)
-        sys.exit(1)
+        exit(1)
 
 def confirm_and_execute_commands(commands):
     print("The following commands will be executed:")
@@ -19,7 +19,7 @@ def confirm_and_execute_commands(commands):
             execute_command(cmd)
     else:
         print("Operation cancelled.")
-        sys.exit(0)
+        exit(0)
 
 def main(database_name, database_username):
 
