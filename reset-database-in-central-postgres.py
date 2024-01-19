@@ -22,7 +22,10 @@ def confirm_and_execute_commands(commands):
         exit(0)
 
 def main(database_name, database_username):
-
+    # If database_username is None, set it to database_name
+    if database_username is None:
+        database_username = database_name
+        
     # Commands to drop and recreate the database
     postgres_commands = [
         f"docker exec central-postgres psql -v ON_ERROR_STOP=1 -U postgres -c 'DROP DATABASE IF EXISTS {database_name};'",
@@ -36,7 +39,7 @@ def main(database_name, database_username):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Manage a PostgreSQL database in a Docker container.")
     parser.add_argument("database_name", help="Name of the database")
-    parser.add_argument("database_username", help="Username for database access")
+    parser.add_argument("database_username", nargs='?', default=None, help="Username for database access (optional, defaults to database name)")
 
     args = parser.parse_args()
 
